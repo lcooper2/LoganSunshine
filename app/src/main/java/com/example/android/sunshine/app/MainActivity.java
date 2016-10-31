@@ -64,7 +64,7 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-
+            // Dummy Data
             String[] data = {
                     "Mon 6/23 - Sunny 31/17",
                     "Tue 6/24 - Foggy 21/8",
@@ -74,12 +74,13 @@ public class MainActivity extends ActionBarActivity {
                     "Sat 6/28 - TRAPPED IN WEATHERSTATION 23/18",
                     "Sun 6/29 - Sunny 20/7"
             };
-
+            // Turn data into an arraylist and create its adapter
             List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
             mForecastAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, weekForecast);
 
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+            // Create a listview and assign it an adapter
             ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
             listView.setAdapter(mForecastAdapter);
 
