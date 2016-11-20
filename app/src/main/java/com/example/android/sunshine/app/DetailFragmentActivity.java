@@ -3,7 +3,12 @@ package com.example.android.sunshine.app;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 public class DetailFragmentActivity extends FragmentActivity {
@@ -23,7 +28,8 @@ public class DetailFragmentActivity extends FragmentActivity {
             System.out.println(forecast_string);
         }
         // Get SupportFragmentManager, pass the id of the fragment layout (detail_fragment_activity.xml), and add it to the manager
-        getSupportFragmentManager().beginTransaction().replace(R.id.detail_fragment_layout, new DetailFragment()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.detail_fragment_layout, new DetailFragment()).commit();
+
 
     }
     // Method for ForecastFragment to call DetailFragmentActivity.
@@ -34,4 +40,25 @@ public class DetailFragmentActivity extends FragmentActivity {
         return intent;
     }
 
+    public static class DetailFragment extends Fragment {
+
+        private String forecastStr; // string that represents the weather forecast for the selected day
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            // get the fragment's host activity, get the activity's starting intent, and extract out weather forecast
+            forecastStr = getActivity().getIntent().getStringExtra(FORECAST_STRING_TAG);
+
+        }
+
+        @Override
+        // Inflate the fragment, wire up the fragment's textView, and display the forecast string in the textView.
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.detail_fragment, container, false);
+            TextView textView = (TextView) rootView.findViewById(R.id.detail_fragment_textview);
+            textView.setText(forecastStr);
+            return rootView;
+        }
+    }
 }
